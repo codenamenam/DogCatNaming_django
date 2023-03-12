@@ -4,7 +4,6 @@ from .models import CatSearch, DogSearch
 from rest_framework.views import APIView
 from .serializers import CatSearchSerializer, DogSearchSerializer
 from django.http import HttpResponse
-from .Search.searchHandler import search
 
 
 class CatSearchListAPI(APIView):
@@ -52,5 +51,4 @@ class DogSearchListAPI(APIView):
 
 
 def hi(request):
-    search()
-    return HttpResponse("search start")
+    return HttpResponse("Hi")

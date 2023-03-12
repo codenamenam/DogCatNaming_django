@@ -39,7 +39,7 @@ def search():
                 result.encoding = result.apparent_encoding
                 count += 1
                 if count % 30 == 0:
-                    time.sleep(3600)
+                    time.sleep(1800)
                 print(keyword)
 
                 for i in result:

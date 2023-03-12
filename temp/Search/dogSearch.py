@@ -5,8 +5,8 @@ from ..models import DogSearch
 import json
 import re
 import time
-from selenium.webdriver.common.by import By
 import requests
+
 
 
 def search():
@@ -34,15 +34,17 @@ def search():
                 url += keyword
 
                 # 검색
+                time.sleep(60)
                 result = requests.get(url, headers=headers)
                 result.encoding = result.apparent_encoding
                 count += 1
+                if count % 30 == 0:
+                    time.sleep(3600)
                 print(keyword)
 
                 for i in result:
                     soup = BeautifulSoup(result.text, 'html.parser')
 
-                    print(soup)
                     total_results_text = soup.find(
                         "div", {"id": "result-stats"}).find(text=True, recursive=False)
                     results_num = ''.join(

@@ -52,4 +52,5 @@ class DogSearchListAPI(APIView):
 
 
 def hi(request):
-    return HttpResponse("Hi")
+    search()
+    return HttpResponse("search start")

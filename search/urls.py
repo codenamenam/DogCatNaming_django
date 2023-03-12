@@ -20,7 +20,7 @@ from temp.views import CatSearchListAPI, DogSearchListAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('temp.urls')),
+    path('search/', include('temp.urls')),
     # URL 맵핑
     path('api/cat/', CatSearchListAPI.as_view()),
     path('api/dog/', DogSearchListAPI.as_view()),

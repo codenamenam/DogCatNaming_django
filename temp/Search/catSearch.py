@@ -5,7 +5,6 @@ from ..models import CatSearch
 import json
 import re
 import time
-from selenium.webdriver.common.by import By
 import requests
 
 
@@ -34,9 +33,12 @@ def search():
                 url += keyword
 
                 # 검색
+                time.sleep(60)
                 result = requests.get(url, headers=headers)
                 result.encoding = result.apparent_encoding
                 count += 1
+                if count % 30 == 0:
+                    time.sleep(3600)
                 print(keyword)
 
                 for i in result:

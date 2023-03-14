@@ -34,28 +34,31 @@ def search():
                 url += keyword
 
                 # 검색
-                time.sleep(60)
+                time.sleep(10)
                 result = requests.get(url, headers=headers)
                 result.encoding = result.apparent_encoding
-                count += 1
-                if count % 30 == 0:
-                    time.sleep(1800)
+                soup = BeautifulSoup(result.text, 'html.parser')
                 print(keyword)
 
-                for i in result:
+
+                while soup.find("div", {"id": "result-stats"}) is None:
+                    time.sleep(600)
+                    result = requests.get(url, headers=headers)
+                    result.encoding = result.apparent_encoding
                     soup = BeautifulSoup(result.text, 'html.parser')
+                    print(keyword)
+                    print(soup)
+                    
 
-                    total_results_text = soup.find(
-                        "div", {"id": "result-stats"}).find(text=True, recursive=False)
-                    results_num = ''.join(
-                        [num for num in total_results_text if num.isdecimal()])
-                    print(results_num)
+                total_results_text = soup.find("div", {"id": "result-stats"}).find(text=True, recursive=False)
+                results_num = ''.join([num for num in total_results_text if num.isdecimal()])
+                print(results_num)
 
-                    num = int(results_num)
-                    temp[key] = num
-                    break
+                num = int(results_num)
+                temp[key] = num
+
 
         # 검색결과
-        headers = {'Content-Type': 'application/json;'}
+        request_headers = {'Content-Type': 'application/json;'}
         requests.put("http://127.0.0.1:8000/api/dog/",
-                     data=json.dumps(temp, ensure_ascii=False).encode('utf-8'), headers=headers)
+                     data=json.dumps(temp, ensure_ascii=False).encode('utf-8'), headers=request_headers)
